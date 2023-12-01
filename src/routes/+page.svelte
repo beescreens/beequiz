@@ -11,11 +11,11 @@
 	const quizzes = [
 		{
 			label: 'beeQuiz demonstration (JSON)',
-			value: 'https://quiz.beescreens.ch/quizzes/example.json',
+			value: 'https://raw.githubusercontent.com/beescreens/beequiz/main/quizzes/example.json',
 		},
 		{
 			label: 'beeQuiz demonstration (YAML)',
-			value: 'https://quiz.beescreens.ch/quizzes/example.yaml',
+			value: 'https://raw.githubusercontent.com/beescreens/beequiz/main/quizzes/example.yaml',
 		},
 	];
 

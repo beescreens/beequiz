@@ -6,22 +6,24 @@ export async function load({ fetch, url }) {
 	const quizUrl = url.searchParams.get('url');
 	const quizQuestionNumber = url.searchParams.get('question');
 
-	if (!quizUrl) throw error(404, 'Missing quiz url');
+	if (!quizUrl) {
+		throw error(404, 'Missing quiz url');
+	}
 
-	let response;
+	const response = await fetch(quizUrl);
 
-	try {
-		response = await fetch(quizUrl);
-	} catch (e) {
+	if (!response.ok) {
 		throw error(404, 'Quiz not found');
 	}
 
-	const quizType = response.headers.get('content-type');
+	const urlParts = quizUrl.split('.');
+	const quizExtension = urlParts[urlParts.length - 1];
 
 	let quizFile;
-	if (quizType === 'application/json') {
-		quizFile = await response.json();
-	} else if (quizType === 'text/yaml') {
+	if (quizExtension.startsWith('json')) {
+		quizFile = await response.text();
+		quizFile = JSON.parse(quizFile);
+	} else if (quizExtension.startsWith('yaml') || quizExtension.startsWith('yml')) {
 		quizFile = await response.text();
 		quizFile = YAML.parse(quizFile);
 	} else {
