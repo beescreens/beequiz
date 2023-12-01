@@ -8,8 +8,8 @@
 		EyeClosed,
 	} from 'radix-icons-svelte';
 
+	import isomorphicDompurify from 'isomorphic-dompurify';
 	import { Carta, CartaViewer } from 'carta-md';
-	import { sanitize } from 'isomorphic-dompurify';
 	import { code } from '@cartamd/plugin-code';
 
 	import { goto } from '$app/navigation';
@@ -30,7 +30,7 @@
 				lineNumbering: true,
 			}),
 		],
-		sanitizer: sanitize,
+		sanitizer: isomorphicDompurify.sanitize,
 	});
 
 	let selectedAnswer: string | undefined = undefined;
