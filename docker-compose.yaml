@@ -1,3 +1,9 @@
+networks:
+  traefik_network:
+    name: traefik_network
+    driver_opts:
+      com.docker.network.bridge.name: traefik_network
+
 services:
   beequiz:
     image: ghcr.io/beescreens/beequiz:${BEEQUIZ_IMAGE_VERSION:-latest}
@@ -5,8 +11,10 @@ services:
       context: .
       dockerfile: Dockerfile
     restart: unless-stopped
-    ports:
-      - 3000:3000
+    networks:
+      - traefik_network
+    expose:
+      - 3000
     labels:
       # Traefik
       - traefik.enable=true
@@ -45,6 +53,8 @@ services:
       - --certificatesresolvers.letsencrypt.acme.email=contact@beescreens.ch
       - --certificatesresolvers.letsencrypt.acme.storage=/etc/traefik/acme.json
     restart: unless-stopped
+    networks:
+      - traefik_network
     ports:
       - 80:80
       - 443:443
