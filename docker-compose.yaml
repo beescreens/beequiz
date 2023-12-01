@@ -1,0 +1,59 @@
+services:
+  beequiz:
+    image: ghcr.io/beescreens/beequiz:${BEEQUIZ_IMAGE_VERSION:-latest}
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - 3000:3000
+    labels:
+      # Traefik
+      - traefik.enable=true
+      # Middlewares
+      - traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https
+      - traefik.http.middlewares.redirect-to-https.redirectscheme.permanent=true
+      # HTTP
+      - traefik.http.routers.beequiz-http.rule=Host(`quiz.beescreens.ch`)
+      - traefik.http.routers.beequiz-http.entrypoints=web
+      - traefik.http.routers.beequiz-http.middlewares=redirect-to-https
+      - traefik.http.routers.beequiz-http.service=beequiz
+      # HTTPS
+      - traefik.http.routers.beequiz-https.rule=Host(`quiz.beescreens.ch`)
+      - traefik.http.routers.beequiz-https.entrypoints=websecure
+      - traefik.http.routers.beequiz-https.tls=true
+      - traefik.http.routers.beequiz-https.tls.certresolver=letsencrypt
+      - traefik.http.routers.beequiz-https.service=beequiz
+      # Service
+      - traefik.http.services.beequiz.loadbalancer.server.port=3000
+
+  traefik:
+    image: traefik:${TRAEFIK_IMAGE_VERSION:-latest}
+    command:
+      # Global
+      - --log.level=ERROR
+      - --api=true
+      # Docker
+      - --providers.docker=true
+      - --providers.docker.watch=true
+      - --providers.docker.exposedByDefault=false
+      # Entrypoints
+      - --entrypoints.web.address=:80
+      - --entrypoints.websecure.address=:443
+      # Certificates
+      - --certificatesresolvers.letsencrypt.acme.tlschallenge=true
+      - --certificatesresolvers.letsencrypt.acme.email=contact@beescreens.ch
+      - --certificatesresolvers.letsencrypt.acme.storage=/etc/traefik/acme.json
+    restart: unless-stopped
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./acme.json:/etc/traefik/acme.json
+    labels:
+      # Traefik
+      - traefik.enable=true
+      # Middlewares
+      - traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https
+      - traefik.http.middlewares.redirect-to-https.redirectscheme.permanent=true

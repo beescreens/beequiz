@@ -1,0 +1,29 @@
+## Linux
+
+# Temporary files
+*~
+
+## macOS
+
+# Files created by macOS Finder
+.DS_Store
+
+## Node
+
+# Dependency directories
+node_modules/
+
+## Svelte / SvelteKit
+/.svelte-kit
+/build
+/package
+vite.config.js.timestamp-*
+vite.config.ts.timestamp-*
+
+## Windows
+
+# Windows thumbnail cache files
+Thumbs.db
+
+# Folder config file
+[Dd]esktop.ini

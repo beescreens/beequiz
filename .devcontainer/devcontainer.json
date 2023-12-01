@@ -1,0 +1,27 @@
+{
+	"name": "beeQuiz Development Container",
+	"dockerComposeFile": "docker-compose.yml",
+	"service": "devcontainer",
+	"workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+	// "features": {
+	// 	"ghcr.io/devcontainers/features/docker-outside-of-docker:1": {}
+	// }
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"bradlc.vscode-tailwindcss",
+				"dbaeumer.vscode-eslint",
+				"esbenp.prettier-vscode",
+				"GitHub.copilot",
+				"jebbs.plantuml",
+				"ms-azuretools.vscode-docker",
+				"ms-vsliveshare.vsliveshare",
+				"streetsidesoftware.code-spell-checker",
+				"streetsidesoftware.code-spell-checker-french",
+				"svelte.svelte-vscode"
+			]
+		}
+	},
+	// Execute the post-create.sh script once the container is created
+	"postCreateCommand": "./.devcontainer/post-create.sh"
+}

@@ -1,0 +1,27 @@
+{
+	"[javascript]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+	"[json]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+	"[jsonc]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+	"[svelte]": {
+		"editor.defaultFormatter": "svelte.svelte-vscode"
+	},
+	"[typescript]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+	"editor.formatOnPaste": true,
+	"editor.formatOnSave": true,
+	"editor.renderWhitespace": "all",
+	"files.insertFinalNewline": true,
+	"javascript.preferences.importModuleSpecifier": "non-relative",
+	"javascript.updateImportsOnFileMove.enabled": "always",
+	"typescript.preferences.importModuleSpecifier": "non-relative",
+	"typescript.updateImportsOnFileMove.enabled": "always",
+	"plantuml.render": "PlantUMLServer",
+	"plantuml.server": "http://localhost:8080"
+}
